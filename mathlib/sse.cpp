@@ -10,6 +10,11 @@
 #include "tier0/dbg.h"
 #include "mathlib/mathlib.h"
 #include "mathlib/vector.h"
+
+#if defined(__arm__) || defined(__aarch64__)
+#include "sse2neon.h"
+#endif
+
 #include "sse.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -182,7 +187,7 @@ float FASTCALL _SSE_VectorNormalize (Vector& vec)
 		r[ 0 ] = vec.x * recipSqrt;
 		r[ 1 ] = vec.y * recipSqrt;
 		r[ 2 ] = vec.z * recipSqrt;
-#elif defined __e2k__
+#elif defined(__e2k__) || defined(__arm__) || defined(__aarch64__)
 		float rsqrt = _SSE_RSqrtAccurate( v[0] * v[0] + v[1] * v[1] + v[2] * v[2] );
 		r[0] = v[0] * rsqrt;
 		r[1] = v[1] * rsqrt;
@@ -504,7 +509,7 @@ float FastCos( float x )
 		movss   x,    xmm0
 		
 	}
-#elif defined( _WIN64 ) || defined( __e2k__ )
+#elif defined( _WIN64 ) || defined( __e2k__ ) || defined(__arm__) || defined(__aarch64__)
 	return cosf( x );
 #elif POSIX
 	

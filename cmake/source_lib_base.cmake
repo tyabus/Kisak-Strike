@@ -25,5 +25,4 @@ else()
     message(FATAL_ERROR "Couldn't find platform for library base")
 endif()
 
-
 include("${CMAKE_MODULE_PATH}/source_video_base.cmake")

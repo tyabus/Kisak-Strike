@@ -1,4 +1,4 @@
-if( GL AND NOT OSX32 )
+if( GL AND NOT OSX32 AND NOT DEDICATED )
     set(SDL "1")
 endif()
 
@@ -9,7 +9,7 @@ endif()
 if( GL )
     add_definitions(-DGL_GLEXT_PROTOTYPES -DDX_TO_GL_ABSTRACTION)
 endif()
-if( SDL )
+if( SDL AND NOT DEDICATED )
     add_definitions(-DUSE_SDL)
     #Use system SDL2 for linux.
     if( LINUXALL )

@@ -31,7 +31,7 @@ endif()
 if(UNIX AND NOT APPLE AND NOT WIN32)
 	#Downgrade ABI for kisakstrike
 	message(STATUS "Downgrading CXX11 ABI for kisakstrike!")
-	if(CMAKE_SYSTEM_PROCESSOR STREQUAL "e2k")
+	if(CMAKE_SYSTEM_PROCESSOR STREQUAL "e2k" OR CMAKE_SYSTEM_PROCESSOR MATCHES "arm" OR CMAKE_SYSTEM_PROCESSOR MATCHES "aarch" )
 		# O3 on mcst-lcc approximately equal to O2 at gcc X86/ARM
 		add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0 -O3 -march=native -fpermissive -fpic -Wno-narrowing)
 		# -mstackrealign option is X86 specific and not supported by mcst-lcc
@@ -40,7 +40,7 @@ if(UNIX AND NOT APPLE AND NOT WIN32)
 		add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0 -O2 -march=native -fpermissive -fpic -Wno-narrowing)
 		# VALVE: when steamclient.so is launched from Python the stack is not 16-byte aligned and gcc assumes
 		# that it will be, causing crashes when writing to SSE local variables.
-		add_definitions( -mstackrealign)
+		add_definitions(-mstackrealign)
 	endif()
 endif()
 

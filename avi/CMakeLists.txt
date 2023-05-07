@@ -21,20 +21,19 @@ include(${CMAKE_MODULE_PATH}/detect_platform.cmake)
 include(${CMAKE_MODULE_PATH}/source_dll_base.cmake)
 #include("${CMAKE_MODULE_PATH}/source_video_base.cmake") already included in source_bases.
 
-if( QUICKTIME_WINDOWS )
+#if( QUICKTIME_WINDOWS )
     #$AdditionalIncludeDirectories	"$BASE,..\common\quicktime_win32\"		[$QUICKTIME_WINDOWS]
-endif()
-if( WINDOWS )
+#endif()
+#if( WINDOWS )
     #$AdditionalIncludeDirectories	"$BASE;$SRCDIR\dx9sdk\include"			[$WINDOWS]
-endif()
+#endif()
 
 #Compiler
-if( LINUXALL )
+#if( LINUXALL )
     #these dont exist... Seems to work... Commented out
     #include_directories(${SRCDIR}/thirdparty/sdl/include)
     #include_directories(${SRCDIR}/thirdparty/sdl_mixer)
-endif()
-
+#endif()
 
 #linker
 if( LINUXALL )

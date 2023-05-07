@@ -2046,13 +2046,13 @@ void CMaterialSystem::GenerateConfigFromConfigKeyValues( MaterialSystem_Config_t
 	uint width = 0;
 	uint height = 0;
 	uint refreshHz = 0; // Not used
-
+#ifndef DEDICATED
 	// query backbuffer size (window size whether FS or windowed)
 	if( g_pLauncherMgr )
 	{
 		g_pLauncherMgr->GetNativeDisplayInfo( -1, width, height, refreshHz );
 	}
-
+#endif
 	pConfig->m_VideoMode.m_Width = width;
 	pConfig->m_VideoMode.m_Height = height;
 
