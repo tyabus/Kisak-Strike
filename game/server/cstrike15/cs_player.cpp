@@ -193,6 +193,7 @@ ConVar sv_spawn_afk_bomb_drop_time( "sv_spawn_afk_bomb_drop_time", "15", FCVAR_R
 extern ConVar spec_replay_winddown_time;
 
 ConVar mp_drop_knife_enable( "mp_drop_knife_enable", "0", FCVAR_RELEASE, "Allows players to drop knives." );
+ConVar mp_drop_grenade_enable( "mp_drop_grenade_enable", "0", FCVAR_RELEASE, "Allows players to drop grenades." );
 
 static ConVar tv_relayradio( "tv_relayradio", "0", FCVAR_RELEASE, "Relay team radio commands to TV: 0=off, 1=on" );
 
@@ -12864,8 +12865,8 @@ bool CCSPlayer::HandleDropWeapon( CBaseCombatWeapon *pWeapon, bool bSwapping )
 
 		default:
 		{
-			// let dedicated servers optionally allow droppable knives
-			if ( type == WEAPONTYPE_KNIFE && mp_drop_knife_enable.GetBool( ) )
+			// let dedicated servers optionally allow droppable knives and grenades
+			if ( ( type == WEAPONTYPE_KNIFE && mp_drop_knife_enable.GetBool() ) || ( type == WEAPONTYPE_GRENADE && mp_drop_grenade_enable.GetBool() ) )
 			{
 				if ( CSGameRules( )->GetCanDonateWeapon( ) && !pCSWeapon->GetDonated( ) )
 				{
