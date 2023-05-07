@@ -33,6 +33,11 @@ include(${CMAKE_MODULE_PATH}/source_exe_base.cmake)
 
 target_sources(${OUTBINNAME} PRIVATE main.cpp)
 
+# I dont know if mingw can compile resource files
+if( MSVC )
+	target_sources(${OUTBINNAME} PRIVATE launcher_main.rc)
+endif()
+
 if( LINUXALL )
     target_link_libraries(${OUTBINNAME} dl pthread)
 endif()
