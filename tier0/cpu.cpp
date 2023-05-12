@@ -417,25 +417,6 @@ bool CheckSSE4aTechnology(void)
 #endif
 }
 
-static bool Check3DNowTechnology(void)
-{
-#if defined( _X360 ) || defined( _PS3 ) || defined( PLATFORM_ARM )
-	return false;
-#elif defined( __e2k__ )
-	#if defined( __3dNOW__ )
-		return true;
-	#else
-		return false;
-	#endif
-#else
-	if ( cpuid( 0x80000000 ).eax > 0x80000000L )
-    {
-		return ( cpuid( 0x80000001 ).eax & ( 1 << 31 ) ) != 0;
-    }
-    return false;
-#endif
-}
-
 static bool CheckCMOVTechnology(void)
 {
 #if defined( _X360 ) || defined( _PS3 ) || defined( __e2k__ ) || defined( PLATFORM_ARM )
@@ -951,7 +932,6 @@ const CPUInformation& GetCPUInformation()
 	pi.m_bSSE4a = CheckSSE4aTechnology();
 	pi.m_bSSE41 = CheckSSE41Technology();
 	pi.m_bSSE42 = CheckSSE42Technology();
-	pi.m_b3DNow = Check3DNowTechnology();
 	pi.m_bAVX	= CheckAVXTechnology();
 	pi.m_szProcessorID = ( tchar* )GetProcessorVendorId(); // MCST
 	pi.m_szProcessorBrand = ( tchar* )GetProcessorBrand(); // e.g. "elbrus-8c"
@@ -974,7 +954,6 @@ const CPUInformation& GetCPUInformation()
 		pi.m_bSSE4a = CheckSSE4aTechnology();
 		pi.m_bSSE41 = ( cpuid1.ecx >> 19 ) & 1;
 		pi.m_bSSE42 = ( cpuid1.ecx >> 20 ) & 1;
-		pi.m_b3DNow = Check3DNowTechnology();
 		pi.m_bAVX	= ( cpuid1.ecx >> 28 ) & 1;
 		pi.m_szProcessorID = ( tchar* )GetProcessorVendorId();
 		pi.m_szProcessorBrand = ( tchar* )GetProcessorBrand();

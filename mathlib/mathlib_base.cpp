@@ -3991,7 +3991,7 @@ bool CalcLineToLineIntersectionSegment(
 volatile static char const *pDebugString;
 #endif
 
-void MathLib_Init( float gamma, float texGamma, float brightness, int overbright, bool bAllow3DNow, bool bAllowSSE, bool bAllowSSE2, bool bAllowMMX )
+void MathLib_Init( float gamma, float texGamma, float brightness, int overbright, bool bAllowSSE, bool bAllowSSE2, bool bAllowMMX )
 {
 	if ( s_bMathlibInitialized )
 		return;
