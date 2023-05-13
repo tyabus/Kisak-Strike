@@ -26,9 +26,15 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-static void ivu_string_print_function( const char *str )
+#ifdef POSIX
+void __attribute__((constructor)) vphysics_init(void);
+#endif		// POSIX
+
+void vphysics_init(void)
 {
-	Msg("%s", str);
+	//ivp_set_message_print_function( ivu_string_print_function ); //lwss - commented out, seems to be non existant in this version
+
+	MathLib_Init(2.2f, 2.2f, 0.0f, 2.0f, false, false, false);
 }
 
 #if defined(_WIN32) && !defined(_XBOX)
@@ -42,7 +48,8 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved )
 	{
 		//ivp_set_message_print_function( ivu_string_print_function );
 
-		MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f, false, false, false );
+		//MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f, false, false, false );
+		vphysics_init();
 		// store out module handle
 		//gPhysicsDLLHandle = (HMODULE)hinstDLL;
 	}
@@ -53,17 +60,6 @@ BOOL WINAPI DllMain( HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved )
 }
 
 #endif		// _WIN32
-
-#ifdef POSIX
-void __attribute__ ((constructor)) vphysics_init(void);
-void vphysics_init(void)
-{
-	//ivp_set_message_print_function( ivu_string_print_function ); //lwss - commented out, seems to be non existant in this version
-
-	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f, false, false, false, false );
-}
-#endif
-
 
 // simple 32x32 bit array
 class CPhysicsCollisionSet : public IPhysicsCollisionSet
