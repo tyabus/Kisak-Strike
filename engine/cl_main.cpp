@@ -2832,7 +2832,6 @@ void CL_Move(float accumulated_extra_samples, bool bFinalTick )
 	// show warning message/UI
 	if ( hasProblem )
 	{
-#if !defined( CSTRIKE15 )
 		con_nprint_t np;
 		np.time_to_live = 1.0;
 		np.index = 2;
@@ -2842,7 +2841,6 @@ void CL_Move(float accumulated_extra_samples, bool bFinalTick )
 		np.color[ 2 ] = 0.2;
 		
 		Con_NXPrintf( &np, "WARNING:  Connection Problem" );
-#endif
 
 		if ( bAllowTimeout )
 		{
@@ -2853,10 +2851,8 @@ void CL_Move(float accumulated_extra_samples, bool bFinalTick )
 			// write time until connection is dropped to a convar
 			cl_connection_trouble_info.SetValue( CFmtStr( "disconnect(%0.3f)", flRemainingTime ) );
 
-#if !defined( CSTRIKE15 )
 			np.index = 3;
 			Con_NXPrintf( &np, "Auto-disconnect in %.1f seconds", flRemainingTime );
-#endif
 
 			EngineVGui()->NeedConnectionProblemWaitScreen();
 		}
