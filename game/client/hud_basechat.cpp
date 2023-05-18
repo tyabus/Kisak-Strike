@@ -732,15 +732,6 @@ void CHudChatHistory::ApplySettings( KeyValues *inResourceData )
 void CHudChatHistory::Paint()
 {
 	BaseClass::Paint();
-	// 84928: Messages/Instructions from coop partners are important and
-	// we don't want to have them disappear. Keep them on and let them spam.
-#if !defined ( PORTAL2 ) 
-	if ( IsAllTextAlphaZero() && HasText() )
-	{
-		SetText( "" );
-		// Wipe
-	}
-#endif
 }
 
 CBaseHudChat *g_pHudChat = NULL;
