@@ -26,16 +26,16 @@ sudo apt install git build-essential cmake libsdl2-mixer-dev libsdl2-dev libgoog
 ```
 #### Fedora
 ```
-sudo dnf install git SDL2-devel SDL2_mixer-devel gperftools-devel openal-soft-devel libcurl-devel openssl-devel fontconfig-devel freetype-devel cmake gcc g++ mesa-libGL-devel mesa-libGLU-devel
+sudo dnf install git SDL2-devel SDL2_mixer-devel openal-soft-devel libcurl-devel openssl-devel fontconfig-devel freetype-devel cmake gcc g++ mesa-libGL-devel mesa-libGLU-devel
 ```
 #### Arch
 ```
-sdl2 sdl2_mixer gperftools openal libcurl-compat openssl fontconfig freetype2 mesa cmake gcc base-devel
+sdl2 sdl2_mixer openal libcurl-compat openssl fontconfig freetype2 mesa cmake gcc base-devel
 ```
 
 #### Gentoo
 ```
-media-libs/libsdl2 media-libs/sdl2-mixer dev-util/google-perftools media-libs/openal net-misc/curl dev-libs/openssl media-libs/fontconfig media-libs/freetype media-libs/mesa dev-util/cmake sys-devel/gcc
+media-libs/libsdl2 media-libs/sdl2-mixer media-libs/openal net-misc/curl dev-libs/openssl media-libs/fontconfig media-libs/freetype media-libs/mesa dev-util/cmake sys-devel/gcc
 ```
 
 ## BUILD - cmake/make
