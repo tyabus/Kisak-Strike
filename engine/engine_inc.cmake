@@ -123,7 +123,6 @@ if( NOT DEDICATED )
     target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/debugoverlay.cpp")
 endif()
 
-
 target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/decals.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/disp.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/disp_interface.cpp")
@@ -331,7 +330,6 @@ target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/servermsghandler.cpp")
 if( NOT DEDICATED )
     target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/sys_getmodes.cpp")
     target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/vgui_askconnectpanel.cpp")
-    target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/vgui_watermark.cpp")
 endif()
 target_sources(${OUTBINNAME} PRIVATE "${ESRCDIR}/xboxsystem.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/common/SourceAppInfo.cpp")
@@ -464,13 +462,9 @@ target_link_libraries(${OUTBINNAME} vtf_client)
 if( NOT DEDICATED )
     target_link_libraries(${OUTBINNAME} vgui_controls_client videocfg_client)
 endif()
-if( NOT VS2015 )
-    if( KISAK_USE_SDR )
-        add_definitions(-DKISAK_USE_SDR)
-        target_link_libraries(${OUTBINNAME} ${LIBPUBLIC}/steamdatagramlib_client.a) #Link with Evil Proprietary steamdatagram lib
-    endif()
-else()
-    message(FATAL_ERROR "Visual Studio 2015 detected... Weird.")
+if( KISAK_USE_SDR )
+    add_definitions(-DKISAK_USE_SDR)
+    target_link_libraries(${OUTBINNAME} ${LIBPUBLIC}/steamdatagramlib_client.a) #Link with Evil Proprietary steamdatagram lib
 endif()
 target_link_libraries(${OUTBINNAME} bzip2_client)
 if(NOT DEDICATED)
@@ -481,7 +475,7 @@ if( LINUXALL AND NOT DEDICATED )
     #Link to System-wide curl, openssl, zlib, and crypto
     target_link_libraries(${OUTBINNAME} curl ssl z crypto)
 endif()
-target_link_libraries(${OUTBINNAME} quickhull_client)
+target_link_libraries(${OUTBINNAME} quickhull_client cryptopp-object)
 if( SDL AND NOT LINUXALL )
     #$ImpLib	"SDL2" [$SDL && !$LINUXALL]
 endif()
@@ -495,11 +489,3 @@ if( LINUX64 AND NOT DEDICATED )
         message("Using Standard CS:GO Audio.\n")
     endif()
 endif()
-
-#if( (LINUXALL AND DEDICATED) OR OSXALL )
-    #target_link_libraries(${OUTBINNAME} ${SRCDIR}/lib${PLATSUBDIR}/release/libcryptopp.a)
-    #target_link_libraries(${OUTBINNAME} cryptopp-object) #target from /external/cryptopp cmake
-#elseif( LINUXALL AND NOT DEDICATED )
-    #target_link_libraries(${OUTBINNAME} ${SRCDIR}/lib${PLATSUBDIR}/release/libcryptopp_client.a) #built by us in the setup phase
-    target_link_libraries(${OUTBINNAME} cryptopp-object) #target from /external/cryptopp cmake
-#endif()
