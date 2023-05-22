@@ -288,9 +288,7 @@ void CGameUI::Initialize( CreateInterfaceFn factory )
 	vgui::VGui_InitMatSysInterfacesList( "GameUI", &factory, 1 );
 
 	// load localization file
-#if !defined( CSTRIKE15 )
 	g_pVGuiLocalize->AddFile( "resource/gameui_%language%.txt", "GAME", true );
-#endif
 
 	// load mod info
 	ModInfo().LoadCurrentGameInfo();
