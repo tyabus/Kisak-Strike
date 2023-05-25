@@ -74,7 +74,6 @@
     #include "networkstringtable_gamedll.h"
     #include "func_bomb_target.h"
     #include "func_hostage_rescue.h"
-	#include "dedicated_server_ugc_manager.h"
     #include "vstdlib/vstrtools.h"
     #include "platforminputdevice.h"
     #include "cs_entity_spotting.h"
@@ -88,8 +87,6 @@
 #endif
 
 #include "gametypes.h"
-#include "cs_workshop_manager.h"
-#include "ugc_file_info_manager.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -10310,12 +10307,6 @@ void ServerThinkReplayUploader()
 				{
 					Msg( "CHANGELEVEL: Not changing level, %s is false, %s is %s %s\n", mp_match_end_restart.GetName(), mp_match_end_changelevel.GetName(), mp_match_end_changelevel.GetBool() ? "true" : "false", !bNextLevelDiffers ? "and next is the same" : "" );
 				}
-#if defined GAME_DLL 
-				if ( engine->IsDedicatedServer() && DedicatedServerWorkshop().CurrentLevelNeedsUpdate() )
-				{
-					bWantsChangeLevel = true;	// if current level is out of date, we need to change level no matter the settings.
-				}
-#endif 
 
 				if ( IsQueuedMatchmaking() && ( m_eQueuedMatchmakingRematchState == k_EQueuedMatchmakingRematchState_VoteToRematchFailed_Done ) )
 				{
@@ -10359,16 +10350,6 @@ void ServerThinkReplayUploader()
                     }
 
                     m_bPickNewTeamsOnReset = true;
-
-
-
-#if defined ( GAME_DLL )
-					// If we're taking this path, tell the server ugc manager to check for updates now and force a real change level should we need one.
-					if ( engine->IsDedicatedServer() )
-					{
-						DedicatedServerWorkshop().CheckIfCurrentLevelNeedsUpdate();
-					}
-#endif
                 }
 
                 // Don't run this code again
@@ -17302,26 +17283,6 @@ const wchar_t* CCSGameRules::GetFriendlyMapName( const char* szShortName )
     wchar_t* szTranslated = g_pVGuiLocalize->Find( szToken );
     if ( szTranslated )
         return szTranslated;
-
-	char szPath[MAX_PATH];
-	V_strcpy_safe( szPath, szShortName );
-	V_FixSlashes( szPath, '/' ); // internal path strings use forward slashes, make sure we compare like that.
-	if ( V_strstr( szPath, "workshop/" ) )
-	{
-		PublishedFileId_t ullId = GetMapIDFromMapPath( szPath );
-		const PublishedFileInfo_t *pInfo = WorkshopManager().GetPublishedFileInfoByID( ullId );
-		static wchar_t wszMapName[128];
-		if ( pInfo )
-		{
-			g_pVGuiLocalize->ConvertANSIToUnicode(pInfo->m_rgchTitle, wszMapName, sizeof(wszMapName));
-			return wszMapName;
-		}
-		else
-		{
-			g_pVGuiLocalize->ConvertANSIToUnicode( V_GetFileName( szShortName ), wszMapName, sizeof(wszMapName));
-			return wszMapName;
-		}
-	}
 
     static wchar_t wszMapName[128];
     g_pVGuiLocalize->ConvertANSIToUnicode(szShortName, wszMapName, sizeof(wszMapName));

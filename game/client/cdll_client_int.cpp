@@ -111,7 +111,6 @@
 #if defined( CSTRIKE15 )
 #include "gametypes/igametypes.h"
 #include "c_keyvalue_saver.h"
-#include "cs_workshop_manager.h"
 #include "c_team.h"
 #include "cs_gamerules.h"
 #include "c_cs_player.h"
@@ -4328,32 +4327,22 @@ const CUtlVector< Frustum_t, CUtlMemoryAligned< Frustum_t,16 > >* CHLClient::Get
 
 bool CHLClient::IsSubscribedMap( const char *pchMapName, bool bOnlyOnDisk )
 {
-#if !defined ( NO_STEAM ) && defined( CSTRIKE15 )
-	return g_CSGOWorkshopMaps.IsSubscribedMap( pchMapName, bOnlyOnDisk );
-#endif
 	return false;
 }
 
 bool CHLClient::IsFeaturedMap( const char *pchMapName, bool bOnlyOnDisk )
 {
-#if !defined ( NO_STEAM ) && defined( CSTRIKE15 )
-	return g_CSGOWorkshopMaps.IsFeaturedMap( pchMapName, bOnlyOnDisk );
-#endif
 	return false;
 }
 
 void CHLClient::DownloadCommunityMapFile( PublishedFileId_t id )
 {
-#if !defined ( NO_STEAM ) && defined( CSTRIKE15 )
-	g_CSGOWorkshopMaps.DownloadMapFile( id );
-#endif
+
 }
 
 float CHLClient::GetUGCFileDownloadProgress( PublishedFileId_t id )
 {
-#if !defined ( NO_STEAM ) && defined( CSTRIKE15 )
-	return g_CSGOWorkshopMaps.GetFileDownloadProgress( id );
-#endif
+	return 0.0f;
 }
 
 void CHLClient::RecordUIEvent( const char* szEvent )

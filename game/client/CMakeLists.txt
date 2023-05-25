@@ -140,8 +140,6 @@ target_sources(${OUTBINNAME} PRIVATE "cstrike15/fx_cs_christmaslights.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/cstrike15/bot/shared_util.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/cstrike15/viewmodel_arm_config.inc")
 target_sources(${OUTBINNAME} PRIVATE "cstrike15/vgui_rootpanel_cs.cpp")
-target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/ugc_workshop_manager.cpp")
-target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/cstrike15/cs_workshop_manager.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/common/platforminputdevice.cpp")
 
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/cstrike15/gametypes.cpp")
