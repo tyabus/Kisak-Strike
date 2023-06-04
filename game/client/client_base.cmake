@@ -48,7 +48,6 @@ target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievement_saverest
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievementmgr.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievementmgr.h")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievements_and_stats_interface.h")
-target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievements_hlx.cpp")
 if( NOT CSGO )
     #$File	"achievement_notification_panel.cpp"		[!$CSGO]
     #$File	"achievement_notification_panel.h"			[!$CSGO]

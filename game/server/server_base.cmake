@@ -28,7 +28,6 @@ TargetBuildAndAddProto( ${OUTBINNAME} ${SRCDIR}/game/shared/base_gcmessages.prot
 
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievement_saverestore.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievementmgr.cpp")
-target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/achievements_hlx.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/activitylist.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRVSRCDIR}/ai_activity.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRVSRCDIR}/ai_agent.cpp")
