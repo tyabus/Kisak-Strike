@@ -61,7 +61,7 @@ if( LINUXALL )
     else()
         target_link_options(${OUTBINNAME} PRIVATE -L/usr/lib32 -L/usr/lib)
     endif()
-    target_compile_options(${OUTBINNAME} PRIVATE -Wno-narrowing -fpermissive) #downgrade some errors to fix build
+    target_compile_options(${OUTBINNAME} PRIVATE -Wno-narrowing) # downgrade some errors to fix build
 endif()
 
 if( NOT DEDICATED )
