@@ -57,17 +57,6 @@ endif()
     target_sources(${OUTLIBNAME} PRIVATE "steam_lobbyapi.h")
 #}
 
-#$Folder "Platform - Xbox 360"
-#{
-    #$File	"x360_lobbyapi.cpp" [$X360]
-    #$File	"x360_lobbyapi.h"
-    #$File	"x360_netmgr.cpp" [$X360]
-    #$File	"x360_netmgr.h"
-    #TODO: can we remove this??
-    target_sources(${OUTLIBNAME} PRIVATE "x360_xlsp_cmd.cpp")
-    #$File	"x360_xlsp_cmd.h"
-#}
-
 #$Folder "Systems"
 #{
     target_sources(${OUTLIBNAME} PRIVATE "datacenter.cpp")
