@@ -1134,7 +1134,7 @@ CPhysicsEnvironment::CPhysicsEnvironment( void )
 	
 
 	BEGIN_IVP_ALLOCATION();
-    m_pPhysEnv = env_manager->create_environment( &appl_env, "JAY", 0xBEEF );
+	m_pPhysEnv = env_manager->create_environment( &appl_env ); // tyabus: Removed useless ivp DRM
 	END_IVP_ALLOCATION();
 
 	// UNDONE: Revisit brush/terrain/object shrinking and tune this number to something larger
