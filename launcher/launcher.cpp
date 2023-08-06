@@ -1507,14 +1507,6 @@ extern "C" DLL_EXPORT int LauncherMain( int argc, char **argv )
 	// Hook the debug output stuff.
 	LoggingSystem_RegisterLoggingListener( &g_LauncherLoggingListener );
 
-#ifndef _PS3
-	// Quickly check the hardware key, essentially a warning shot.  
-	if ( !Plat_VerifyHardwareKeyPrompt() )
-	{
-		return -1;
-	}
-#endif // !_PS3
-
 #ifdef WIN32
 	CommandLine()->CreateCmdLine( IsPC() ? GetCommandLine() : lpCmdLine );
 #else

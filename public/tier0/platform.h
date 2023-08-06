@@ -1949,28 +1949,6 @@ PLATFORM_INTERFACE void GetCurrentDayOfTheYear( int *pDay );  // 0 = Jan 1
 PLATFORM_INTERFACE void InitPME();
 PLATFORM_INTERFACE void ShutdownPME();
 
-
-//-----------------------------------------------------------------------------
-// Security related functions
-//-----------------------------------------------------------------------------
-// Ensure that the hardware key's drivers have been installed.
-PLATFORM_INTERFACE bool Plat_VerifyHardwareKeyDriver();
-
-// Ok, so this isn't a very secure way to verify the hardware key for now.  It
-// is primarially depending on the fact that all the binaries have been wrapped
-// with the secure wrapper provided by the hardware keys vendor.
-PLATFORM_INTERFACE bool Plat_VerifyHardwareKey();
-
-// The same as above, but notifies user with a message box when the key isn't in
-// and gives him an opportunity to correct the situation.
-PLATFORM_INTERFACE bool Plat_VerifyHardwareKeyPrompt();
-
-// Can be called in real time, doesn't perform the verify every frame.  Mainly just
-// here to allow the game to drop out quickly when the key is removed, rather than
-// allowing the wrapper to pop up it's own blocking dialog, which the engine doesn't
-// like much.
-PLATFORM_INTERFACE bool Plat_FastVerifyHardwareKey();
-
 //-----------------------------------------------------------------------------
 // The following are low-level OS-independent wrappers around actual OS file calls.
 //-----------------------------------------------------------------------------
