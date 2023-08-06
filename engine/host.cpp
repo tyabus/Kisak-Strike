@@ -188,6 +188,12 @@ bool XBX_SetProfileDefaultSettings( int iController );
 extern ConVar host_map;
 extern ConVar sv_cheats;
 
+// tyabus: came from enginethreads.cpp
+bool g_bThreadedEngine = false;
+int g_nMaterialSystemThread = 0;
+int g_nServerThread = 1;
+// enginethreads.cpp end
+
 bool g_bDedicatedServerBenchmarkMode = false;
 
 int host_frameticks = 0;
