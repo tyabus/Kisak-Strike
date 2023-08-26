@@ -9004,8 +9004,14 @@ bool CCSPlayer::ClientCommand( const CCommand &args )
 	if ( FStrEq( pcmd, "jointeam" ) ) 
 	{
 		// Players can spam this at the wrong time to get into states we don't want them in. Ignore those cases.
-		if ( ( !IsBot() && !IsHLTV() ) && ( !m_bHasSeenJoinGame || cbIsMatchmaking ) )
+		if ( ( !IsBot() && !IsHLTV() ) && cbIsMatchmaking )
 			return true;
+
+		if( !m_bHasSeenJoinGame )
+		{
+			ClientPrint( this, HUD_PRINTTALK, "Please join the game first\n" );
+			return true;
+		}
 
 		if ( args.ArgC() < 2 )
 		{
