@@ -189,7 +189,6 @@ target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/game/shared/cstrike15/gametypes.
     target_sources(${OUTBINNAME} PRIVATE "cstrike15/gameui/playerlistdialog.cpp")
     target_sources(${OUTBINNAME} PRIVATE "cstrike15/gameui/rungameengine.cpp")
     target_sources(${OUTBINNAME} PRIVATE "cstrike15/gameui/scriptobject.cpp")
-    target_sources(${OUTBINNAME} PRIVATE "cstrike15/gameui/sys_utils.cpp")
     target_sources(${OUTBINNAME} PRIVATE "cstrike15/gameui/textentrybox.cpp")
     target_sources(${OUTBINNAME} PRIVATE "cstrike15/gameui/urlbutton.cpp")
     target_sources(${OUTBINNAME} PRIVATE "cstrike15/gameui/vcontrolslistpanel.cpp")

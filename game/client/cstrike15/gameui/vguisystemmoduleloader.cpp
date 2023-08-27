@@ -8,7 +8,6 @@
 
 #include "ienginevgui.h"
 #include "vguisystemmoduleloader.h"
-#include "sys_utils.h"
 #include "IVguiModule.h"
 #include "ServerBrowser/IServerBrowser.h"
 
