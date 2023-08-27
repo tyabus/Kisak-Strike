@@ -1084,6 +1084,12 @@ bool GrabSourceMutex()
 #ifdef WIN32
 	if ( IsPC() )
 	{
+		// Don't allocate if in multirun mode
+		if( CommandLine()->FindParm( "-allowmultiple" ) || CommandLine()->FindParm( "-multirun" ) )
+		{
+			return true;
+		}
+
 		// don't allow more than one instance to run
 		g_hMutex = ::CreateMutex(NULL, FALSE, TEXT("hl2_singleton_mutex"));
 
@@ -1095,13 +1101,6 @@ bool GrabSourceMutex()
 
 		// couldn't get the mutex, we must be running another instance
 		::CloseHandle(g_hMutex);
-
-		// If there is a VPROJECT defined, we assume you are a developer and know the risks
-		// of running multiple copies of the engine
-		if ( getenv( "VPROJECT" ) && CommandLine()->FindParm( "-allowmultiple" ) )
-		{
-			return true;
-		}
 
 		return false;
 	}
@@ -1188,6 +1187,12 @@ bool GrabSourceMutex()
 
 void ReleaseSourceMutex()
 {
+	// Don't allocate if in multirun mode
+	if( CommandLine()->FindParm( "-allowmultiple" ) || CommandLine()->FindParm( "-multirun" ) )
+	{
+		return;
+	}
+
 #ifdef WIN32
 	if ( IsPC() && g_hMutex )
 	{
