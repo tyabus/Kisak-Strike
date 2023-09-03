@@ -138,7 +138,9 @@
 #if defined( _X360 )
 #include "xbox/xbox_win32stubs.h"
 #endif
+#if defined( _PS3 )
 #include "engine/ips3frontpanelled.h"
+#endif
 #include "audio_pch.h"
 #include "platforminputdevice.h"
 #include "status.h"
@@ -2466,14 +2468,12 @@ void Host_AccumulateTime( float dt )
 float g_fFramesPerSecond = 0.0f;
 
 // temporarily a constant until I bother to hook it to a cvar
+#if defined( _PS3 )
 inline static bool cl_ps3ledframerate()  // should i make the front LEDs show the framerate (divided by two)
 {
-#ifdef _PS3
 	return (CPS3FrontPanelLED::GetSwitches() & CPS3FrontPanelLED::kPS3SWITCH3) == 0;
-#else
-	return false;
-#endif
 }
+#endif
 
 /*
 ==================
@@ -2487,7 +2487,9 @@ void Host_PostFrameRate( float frameTime )
 
 	float fps = 1.0f / frameTime;
 	g_fFramesPerSecond = g_fFramesPerSecond * FPS_AVG_FRAC + ( 1.0f - FPS_AVG_FRAC ) * fps;
-	if ( IsPS3() && !IsCert() )
+
+#if defined( _PS3 )
+	if ( !IsCert() )
 	{
 		if ( cl_ps3ledframerate() )
 		{
@@ -2514,6 +2516,7 @@ void Host_PostFrameRate( float frameTime )
 			CPS3FrontPanelLED::SetLEDs( 0 );
 		}
 	}
+#endif // _PS3
 }
 
 /*
