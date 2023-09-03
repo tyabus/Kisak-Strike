@@ -642,6 +642,9 @@ enum HostThreadMode
 ConVar host_thread_mode( "host_thread_mode", ( IsPlatformX360() || IsPlatformPS3() ) ? "1" : "0", FCVAR_DEVELOPMENTONLY, "Run the host in threaded mode, (0 == off, 1 == if multicore, 2 == force)" );
 ConVar host_threaded_sound( "host_threaded_sound", ( IsPlatformX360() || IsPlatformPS3()) ? "1" : "0", 0, "Run the sound on a thread (independent of mix)" );
 ConVar host_threaded_sound_simplethread( "host_threaded_sound_simplethread", ( IsPlatformPS3()) ? "1" : "0", 0, "Run the sound on a simple thread not a jobthread" );
+
+// Threadpool affinity is no more in newer csgo
+#if defined( _X360 ) || defined( _PS3 )
 extern ConVar threadpool_affinity;
 void OnChangeThreadAffinity( IConVar *var, const char *pOldValue, float flOldValue )
 {
@@ -652,6 +655,7 @@ void OnChangeThreadAffinity( IConVar *var, const char *pOldValue, float flOldVal
 }
 
 ConVar threadpool_affinity( "threadpool_affinity", "1", 0, "Enable setting affinity", 0, 0, 0, 0, &OnChangeThreadAffinity );
+#endif
 
 extern ConVar threadpool_reserve;
 CThreadEvent g_ReleaseThreadReservation( true );
