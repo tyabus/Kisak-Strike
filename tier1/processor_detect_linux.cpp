@@ -16,7 +16,7 @@
 // Turn off memdbg macros (turned on up top) since this is included like a header
 #include "tier0/memdbgoff.h"
 
-#if !defined(__e2k__) || !defined(PLATFORM_ARM) // e2k,arm CPUS don't have CPUID
+#if !defined(__e2k__) && !defined(PLATFORM_ARM) // e2k and arm CPUS don't have CPUID
 static void cpuid(uint32 function, uint32& out_eax, uint32& out_ebx, uint32& out_ecx, uint32& out_edx)
 {
 #if defined(PLATFORM_64BITS)
@@ -41,7 +41,7 @@ static void cpuid(uint32 function, uint32& out_eax, uint32& out_ebx, uint32& out
 	);
 #endif
 }
-#endif // ifndef __e2k__
+#endif // ifndef __e2k__ && PLATFORM_ARM
 
 bool CheckMMXTechnology(void)
 {
