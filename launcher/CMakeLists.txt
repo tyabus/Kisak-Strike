@@ -11,7 +11,7 @@ endif()
 project(launcher)
 set(SRCDIR "${CMAKE_SOURCE_DIR}")
 set(CMAKE_MODULE_PATH ${SRCDIR}/cmake)
-set(OUTBINNAME "launcher")
+set(OUTBINNAME "launcher_client")
 set(OUTBINDIR ${SRCDIR}/../game/bin)
 
 set(NOSTINKYLINKIES "1") #link this project carefully ourselves
