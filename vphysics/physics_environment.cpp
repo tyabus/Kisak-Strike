@@ -2161,7 +2161,7 @@ public:
 		
 		// set the high bit, so zero means "not there"
 		hash |= 0x80000000;
-		return (void *)hash;
+		return (void *)(intp)hash; //lwss x64 fix
 	}
 
 	// Lookup this object and get a multilist entry

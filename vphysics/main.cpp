@@ -187,8 +187,8 @@ IPhysicsCollisionSet *CPhysicsInterface::FindOrCreateCollisionSet( uintptr_t id,
 	IPhysicsCollisionSet *pSet = FindCollisionSet( id );
 	if ( pSet )
 		return pSet;
-	int index = m_collisionSets.AddToTail();
-	m_pCollisionSetHash->add_elem( (void *)id, (void *)(index+1) );
+	intp index = m_collisionSets.AddToTail(); // 64 bit fix
+	m_pCollisionSetHash->add_elem( (void *)(intp)id, (void *)(intp)(index+1) );
 	return &m_collisionSets[index];
 }
 
@@ -198,7 +198,7 @@ IPhysicsCollisionSet *CPhysicsInterface::FindCollisionSet( uintptr_t id )
 	{
 	    //lwss - x64 fixes
 		//int index = (int)m_pCollisionSetHash->find_elem( (void *)id );
-		intptr_t index = (intptr_t)m_pCollisionSetHash->find_elem( (void*)id );
+		intptr_t index = (intptr_t)m_pCollisionSetHash->find_elem( (void*)(intp)id );
 		//lwss end
 		if ( index > 0 )
 		{
