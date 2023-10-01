@@ -25,7 +25,6 @@
 #include "filesystem.h"
 #include <vgui_controls/AnimationController.h>
 #include <vgui/ISurface.h>
-#include "hud_lcd.h"
 #if defined( CSTRIKE15 )
 	#include "c_cs_player.h"
 	#include "cs_gamerules.h"
@@ -400,8 +399,6 @@ void CHud::Init( void )
 	// Create all the Hud elements
 	CHudElementHelper::CreateAllElements();
 
-	gLCD.Init();
-
 	// Initialize all created elements
 	for ( int i = 0; i < GetHudList().Count(); i++ )
 	{
@@ -473,8 +470,6 @@ void CHud::InitFonts()
 //-----------------------------------------------------------------------------
 void CHud::Shutdown( void )
 {
-	gLCD.Shutdown();
-
 	// Delete all the Hud elements
 	int iMax = GetHudList().Count();
 	for ( int i = iMax-1; i >= 0; i-- )
@@ -1136,8 +1131,6 @@ void CHud::UpdateHud( bool bActive )
 	m_iKeyBits &= ( ~( IN_WEAPON1|IN_WEAPON2 ));
 
 	GetClientMode()->Update();
-
-	gLCD.Update();
 }
 
 void CHud::OnSplitScreenStateChanged()

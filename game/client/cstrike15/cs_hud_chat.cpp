@@ -15,7 +15,6 @@
 #include "engine/IEngineSound.h"
 #include "radio_status.h"
 #include "bot/shared_util.h"
-#include "ihudlcd.h"
 #include "voice_status.h"
 #include <vgui/IScheme.h>
 
@@ -176,18 +175,6 @@ void CHudChat::ChatPrintf(int iPlayerIndex, int iFilter, const char* fmt, ...)
 #endif
 		if (!(iFilter & GetFilterFlags()))
 			return;
-	}
-
-	if (hudlcd)
-	{
-		if (*pmsg < 32)
-		{
-			hudlcd->AddChatLine(pmsg + 1);
-		}
-		else
-		{
-			hudlcd->AddChatLine(pmsg);
-		}
 	}
 
 	line->SetText("");
