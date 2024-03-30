@@ -104,8 +104,6 @@ extern CSteamAPIContext *steamapicontext;
 #endif
 extern ISoundEmitterSystemBase *soundemitterbase;
 
-#include "CegClientWrapper.h"
-
 #if defined( CSTRIKE15 )
 extern IGameTypes *g_pGameTypes;
 #endif

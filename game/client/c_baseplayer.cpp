@@ -635,8 +635,6 @@ void C_BasePlayer::Spawn( void )
 
 	SetThink(NULL);
 
-	RANDOM_CEG_TEST_SECRET_LINE_PERIOD( 17, 0, 41, 0 );
-
 	SharedSpawn();
 
 	m_bWasFreezeFraming = false;

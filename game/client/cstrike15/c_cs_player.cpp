@@ -2598,7 +2598,6 @@ void C_CSPlayer::FireGameEvent( IGameEvent *event )
 					C_RecipientFilter filter;
 					filter.AddRecipient( this );
 					C_BaseEntity::EmitSound( filter, entindex(), "Music.GG_Revenge" );
-					STEAMWORKS_TESTSECRETALWAYS_AMORTIZE( 7 );
 				}
 				if ( event->GetInt( "bonus" ) != 0 )
 				{
@@ -2634,8 +2633,6 @@ void C_CSPlayer::FireGameEvent( IGameEvent *event )
 			// Play an audio cue corresponding to getting the final weapon
 			//EmitSound( "GunGameWeapon.AchievedFinalWeapon" );
 			GetCenterPrint()->Print( "#SFUI_Notice_Knife_Level_You" );
-
-			STEAMWORKS_TESTSECRETALWAYS_AMORTIZE( 13 );
 		}
 		else
 		{
@@ -2660,8 +2657,6 @@ void C_CSPlayer::FireGameEvent( IGameEvent *event )
 			{
 				// Play the bonus grenade voiceover after next round start
 				m_StartOfRoundSoundEvents.AddSound( this, "GunGameWeapon.AchievedBonusGrenade", 2.0f );
-
-				STEAMWORKS_TESTSECRETALWAYS_AMORTIZE( 23 );
 			}
 		}
 	}
@@ -2671,7 +2666,6 @@ void C_CSPlayer::FireGameEvent( IGameEvent *event )
 		if ( PlayerUserID == EventUserID )
 		{
 			// Play the voiceover for receiving the c4
-			STEAMWORKS_TESTSECRETALWAYS_AMORTIZE( 13 );
 		}
 	}
 	else if ( Q_strcmp( "item_pickup", name ) == 0 )
@@ -2683,8 +2677,6 @@ void C_CSPlayer::FireGameEvent( IGameEvent *event )
 			// if we aren't playing the sound on the server, play a "silent" version on the client
 			if ( event->GetBool( "silent" ) )
 				EmitSound( "Player.PickupWeaponSilent" );
-
-			STEAMWORKS_TESTSECRET_AMORTIZE( 67 );
 		}
 	}
 	else if ( Q_strcmp( "ammo_pickup", name ) == 0 )
@@ -2715,9 +2707,7 @@ void C_CSPlayer::FireGameEvent( IGameEvent *event )
 		if ( CSGameRules()->IsPlayingGunGameProgressive() || CSGameRules()->IsPlayingGunGameDeathmatch() )
 		{	
 			if ( GetUserID() == event->GetInt("playerid" ) )
-			{		
-				STEAMWORKS_TESTSECRETALWAYS_AMORTIZE( 11 );
-
+			{
 				/*
 				if ( !m_isCurrentGunGameLeader )
 				{

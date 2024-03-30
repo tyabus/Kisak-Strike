@@ -625,8 +625,6 @@ void C_CHostage::LookAround( void )
 		angles[ PITCH ] += RandomFloat( m_headPitchMin, m_headPitchMax );
 		AngleVectors( angles, &forward );
 		m_lookAt = EyePosition() + 100.0f * forward;
-
-		STEAMWORKS_TESTSECRET_AMORTIZE(79);
 	}
 }
 

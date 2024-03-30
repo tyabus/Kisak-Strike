@@ -439,8 +439,6 @@ void C_PhysPropClientside::Break()
 	// spwan break chunks
 	PropBreakableCreateAll( GetModelIndex(), pPhysics, params, this, -1, false );
 
-	STEAMWORKS_TESTSECRET_AMORTIZE(101);
-
 	Release(); // destroy object
 }
 

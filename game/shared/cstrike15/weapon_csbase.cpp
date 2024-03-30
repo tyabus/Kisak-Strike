@@ -1653,15 +1653,10 @@ void CWeaponCSBase::RemoveUnownedWeaponThink()
 #endif
 
 ConVar mp_weapon_prev_owner_touch_time( "mp_weapon_prev_owner_touch_time", "1.5", FCVAR_CHEAT | FCVAR_REPLICATED );
-#if defined ( CLIENT_DLL )
-CEG_NOINLINE void CWeaponCSBase::Drop( const Vector &vecVelocity )
-#else
+
 void CWeaponCSBase::Drop( const Vector &vecVelocity )
-#endif
 {
 #ifdef CLIENT_DLL
-	CEG_PROTECT_VIRTUAL_FUNCTION( CWeaponCSBase_Drop );
-
 	BaseClass::Drop( vecVelocity );
 
 	CBaseHudWeaponSelection *pHudSelection = GetHudWeaponSelection();

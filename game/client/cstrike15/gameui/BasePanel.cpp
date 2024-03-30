@@ -1598,31 +1598,6 @@ void CBaseModPanel::CompleteStartScreenSignIn( void )
 //-----------------------------------------------------------------------------
 // Purpose: update the taskbar a frame
 //-----------------------------------------------------------------------------
-// exposed here as non-constant so CEG can populate the value at DLL init time
-static DWORD CEG_ALLOW_PROPER_TINT = 0xFEA4; // will override 
-
-CEG_NOINLINE DWORD InitUiAllowProperTintFlag( void )
-{
-	CEG_GCV_PRE();
-	CEG_ALLOW_PROPER_TINT = CEG_GET_CONSTANT_VALUE( UiAllowProperTintFlag );
-	CEG_GCV_POST();
-
-	return CEG_ALLOW_PROPER_TINT;
-}
-#if !defined( INCLUDE_SCALEFORM )
-static DWORD CEG_ALLOW_TEXTCHAT = 0x01B3; // will override
-
-CEG_NOINLINE DWORD InitHudAllowTextChatFlag( void )
-{
-	CEG_GCV_PRE();
-	CEG_ALLOW_TEXTCHAT = CEG_GET_CONSTANT_VALUE( HudAllowTextChatFlag );
-	CEG_GCV_POST();
-
-	return CEG_ALLOW_TEXTCHAT;
-}
-#endif
-
-
 int CBaseModPanel::CheckForAnyKeyPressed( bool bCheckKeyboard )
 {
 
@@ -1666,13 +1641,6 @@ void CBaseModPanel::RunFrame()
 	vgui::GetAnimationController()->UpdateAnimations( Plat_FloatTime() );
 
 	BaseModUI::CUIGameData::Get()->RunFrame();
-
-	// CEG checks failing = Really awful looking UI
-	if ( ~CEG_ALLOW_PROPER_TINT & ALLOW_PROPER_TINT_FLAG )
-	{
-		static ConVarRef sf_ui_tint_munge( "sf_ui_tint" );
-		sf_ui_tint_munge.SetValue( 0x10 );
-	}
 
 	// Tick all screens that need to update synchronously
 	UpdateLeaderboardsDialog();
@@ -2318,8 +2286,6 @@ void CBaseModPanel::RunMenuCommand(const char *command)
 
 		ShowMainMenu( true );
 	}
-
-	STEAMWORKS_SELFCHECK_AMORTIZE( 11 );
 
 	if ( !Q_stricmp( command, "OpenGameMenu" ) )
 	{

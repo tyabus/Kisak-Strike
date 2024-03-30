@@ -12,17 +12,7 @@
 #endif
 
 // Debug history should be disabled in release builds
-//#define DISABLE_DEBUG_HISTORY	
-
-#ifdef CLIENT_DLL
-	// CEG interface functions:
-	#define ALLOW_TEXTCHAT_FLAG			0xAD1A
-	extern DWORD InitHudAllowTextChatFlag( void );
-
-	#define ALLOW_PROPER_TINT_FLAG		0x8E3C
-	extern DWORD InitUiAllowProperTintFlag( void );
-
-#endif
+//#define DISABLE_DEBUG_HISTORY
 
 #ifdef CLIENT_DLL
 

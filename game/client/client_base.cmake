@@ -483,8 +483,6 @@ target_sources(${OUTBINNAME} PRIVATE "mumble.cpp")
 target_sources(${OUTBINNAME} PRIVATE "rendertexture.cpp")
 target_sources(${OUTBINNAME} PRIVATE "render_to_rt_helper.cpp")
 
-target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/common/CegClientWrapper.cpp")
-
 #$Folder	"Temporary Entities"
 #{
     target_sources(${OUTBINNAME} PRIVATE "c_basetempentity.cpp")

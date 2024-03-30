@@ -2600,8 +2600,6 @@ void ClientModeCSNormal::FireGameEvent( IGameEvent *event )
 		// show centerprint message when not in training
 		if ( !CSGameRules()->IsPlayingTraining() && !CSGameRules()->IsPlayingCooperativeGametype() )
 		{
-			STEAMWORKS_TESTSECRET_AMORTIZE(5);
-
 			wchar_t wszLocalized[100];
 			wchar_t seconds[4];
 
@@ -3833,7 +3831,7 @@ void ClientModeCSFullscreen::Init( void )
 
 bool g_bClientIsAllowedToPlayOnSecureServers = true;
 
-CEG_NOINLINE void ClientModeCSFullscreen::OnEvent( KeyValues *pEvent )
+void ClientModeCSFullscreen::OnEvent( KeyValues *pEvent )
 {
 	BaseClass::OnEvent( pEvent );
 
@@ -3882,12 +3880,6 @@ CEG_NOINLINE void ClientModeCSFullscreen::OnEvent( KeyValues *pEvent )
 			{ NULL, NULL, RemapText_t::MATCH_FULL }
 		};
 
-		// For any disconnection reason other than unknown:
-		if ( szReason && !StringHasPrefix( szReason, "#SFUI_DisconnectReason_Unknown" ) )
-		{
-			STEAMWORKS_SELFCHECK();
-		}
-
 		szReason = RemapText_t::RemapRawText( arrText, szReason );
 
 		const char *okCommand = NULL;
@@ -3901,7 +3893,6 @@ CEG_NOINLINE void ClientModeCSFullscreen::OnEvent( KeyValues *pEvent )
 	}
 	else if ( !Q_stricmp( pEventName, "OnClientInsecureBlocked" ) )
 	{
-		STEAMWORKS_SELFCHECK();
 		g_bClientIsAllowedToPlayOnSecureServers = false;
 #if defined( INCLUDE_SCALEFORM )
         CMessageBoxScaleform::UnloadAllDialogs();

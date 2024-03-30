@@ -1233,10 +1233,8 @@ bool InitParticleManager()
 	return true;
 }
 
-CEG_NOINLINE bool InitGameSystems( CreateInterfaceFn appSystemFactory )
+bool InitGameSystems( CreateInterfaceFn appSystemFactory )
 {
-	CEG_ENCRYPT_FUNCTION( InitGameSystems );
-
 	if (!VGui_Startup( appSystemFactory ))
 		return false;
 
@@ -1391,12 +1389,6 @@ CON_COMMAND( cl_modemanager_reload, "Reloads the panel metaclasses for vgui scre
 //-----------------------------------------------------------------------------
 int CHLClient::Connect( CreateInterfaceFn appSystemFactory, CGlobalVarsBase *pGlobals )
 {
-	if( !STEAMWORKS_INITCEGLIBRARY() )
-	{
-		return false;
-	}
-	STEAMWORKS_REGISTERTHREAD();
-
 	InitCRTMemDebug();
 	MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
 
@@ -1450,17 +1442,11 @@ int CHLClient::Connect( CreateInterfaceFn appSystemFactory, CGlobalVarsBase *pGl
 void CHLClient::Disconnect()
 {
 	ConVar_Unregister( );
-
-	STEAMWORKS_UNREGISTERTHREAD();
-	STEAMWORKS_TERMCEGLIBRARY();
 }
 
 
 int CHLClient::Init( CreateInterfaceFn appSystemFactory, CGlobalVarsBase *pGlobals )
 {
-	STEAMWORKS_TESTSECRETALWAYS();
-	STEAMWORKS_SELFCHECK();
-
 	COM_TimestampedLog( "ClientDLL factories - Start" );
 	// We aren't happy unless we get all of our interfaces.
 	// please don't collapse this into one monolithic boolean expression (impossible to debug)
@@ -1696,12 +1682,8 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory, CGlobalVarsBase *pGloba
 //-----------------------------------------------------------------------------
 // Purpose: Called after client & server DLL are loaded and all systems initialized
 //-----------------------------------------------------------------------------
-CEG_NOINLINE void CHLClient::PostInit()
+void CHLClient::PostInit()
 {
-	CEG_PROTECT_VIRTUAL_FUNCTION( CHLCLient_PostInit );
-
-	Init_GCVs();
-
 	COM_TimestampedLog( "IGameSystem::PostInitAllSystems - Start" );
 	IGameSystem::PostInitAllSystems();
 	COM_TimestampedLog( "IGameSystem::PostInitAllSystems - Finish" );
@@ -1716,14 +1698,12 @@ CEG_NOINLINE void CHLClient::PostInit()
 	// allow sixnese input to perform post-init operations
 		g_pSixenseInput->PostInit();
 #endif
-
-	STEAMWORKS_TESTSECRETALWAYS();
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Called when the client .dll is being dismissed
 //-----------------------------------------------------------------------------
-CEG_NOINLINE void CHLClient::Shutdown( void )
+void CHLClient::Shutdown( void )
 {
 	if ( g_pRenderToRTHelper )
 	{
@@ -1782,8 +1762,6 @@ CEG_NOINLINE void CHLClient::Shutdown( void )
 			GetFullscreenClientMode()->Shutdown();
 		}
 	}
-
-	CEG_PROTECT_VIRTUAL_FUNCTION( CHLClient_Shutdown );
 
 	input->Shutdown_All();
 	C_BaseTempEntity::ClearDynamicTempEnts();
@@ -2367,10 +2345,8 @@ GPUMemLevel_t GetGPUMemLevel()
 
 ConVar cl_disable_splitscreen_cpu_level_cfgs_in_pip( "cl_disable_splitscreen_cpu_level_cfgs_in_pip", "1", 0, "" );
 
-CEG_NOINLINE void ConfigureCurrentSystemLevel()
+void ConfigureCurrentSystemLevel()
 {
-	CEG_ENCRYPT_FUNCTION( ConfigureCurrentSystemLevel );
-
 	int nCPULevel = GetCPULevel();
 	if ( nCPULevel == CPU_LEVEL_360 )
 	{
@@ -2458,7 +2434,7 @@ CEG_NOINLINE void ConfigureCurrentSystemLevel()
 //-----------------------------------------------------------------------------
 // Purpose: Per level init
 //-----------------------------------------------------------------------------
-CEG_NOINLINE void CHLClient::LevelInitPreEntity( char const* pMapName )
+void CHLClient::LevelInitPreEntity( char const* pMapName )
 {
 	// HACK: Bogus, but the logic is too complicated in the engine
 	if (g_bLevelInitialized)
@@ -2493,8 +2469,6 @@ CEG_NOINLINE void CHLClient::LevelInitPreEntity( char const* pMapName )
 		ACTIVE_SPLITSCREEN_PLAYER_GUARD( hh );
 		ResetToneMapping(1.0);
 	}
-
-	CEG_PROTECT_MEMBER_FUNCTION( CHLClient_LevelInitPreEntity );
 
 	IGameSystem::LevelInitPreEntityAllSystems(pMapName);
 
@@ -2569,7 +2543,7 @@ CEG_NOINLINE void CHLClient::LevelInitPreEntity( char const* pMapName )
 //-----------------------------------------------------------------------------
 // Purpose: Per level init
 //-----------------------------------------------------------------------------
-CEG_NOINLINE void CHLClient::LevelInitPostEntity( )
+void CHLClient::LevelInitPostEntity( )
 {
 	ABS_QUERY_GUARD( true );
 
@@ -2584,8 +2558,6 @@ CEG_NOINLINE void CHLClient::LevelInitPostEntity( )
 	}
 
 	g_HltvReplaySystem.OnLevelInit();
-
-	CEG_PROTECT_MEMBER_FUNCTION( CHLClient_LevelInitPostEntity );
 }
 
 //-----------------------------------------------------------------------------
@@ -2605,7 +2577,7 @@ void CHLClient::ResetStringTablePointers()
 //-----------------------------------------------------------------------------
 // Purpose: Per level de-init
 //-----------------------------------------------------------------------------
-CEG_NOINLINE void CHLClient::LevelShutdown( void )
+void CHLClient::LevelShutdown( void )
 {
 	g_HltvReplaySystem.OnLevelShutdown();
 
@@ -2646,8 +2618,6 @@ CEG_NOINLINE void CHLClient::LevelShutdown( void )
 		pClassList->LevelShutdown();
 		pClassList = pClassList->m_pNextClassList;
 	}
-
-	CEG_ENCRYPT_FUNCTION( CHLClient_LevelShutdown );
 
 	// Now do the post-entity shutdown of all systems
 	IGameSystem::LevelShutdownPostEntityAllSystems();
@@ -2924,8 +2894,6 @@ void CHLClient::PrecacheMaterial( const char *pMaterialName )
 	{
 		*pFound = 0;
 	}
-
-	RANDOM_CEG_TEST_SECRET_PERIOD( 0x0400, 0x0fff );
 		
 	IMaterial *pMaterial = materials->FindMaterial( pTempBuf, TEXTURE_GROUP_PRECACHED );
 	if ( !IsErrorMaterial( pMaterial ) )
@@ -3534,23 +3502,19 @@ void CHLClient::WriteSaveHeaders( CSaveRestoreData *s )
 	g_pGameSaveRestoreBlockSet->PostSave();
 }
 
-CEG_NOINLINE void CHLClient::ReadRestoreHeaders( CSaveRestoreData *s )
+void CHLClient::ReadRestoreHeaders( CSaveRestoreData *s )
 {
 	CRestore restoreHelper( s );
-
-	CEG_ENCRYPT_FUNCTION( CHLClient_ReadRestoreHeaders );
 
 	g_pGameSaveRestoreBlockSet->PreRestore();
 	g_pGameSaveRestoreBlockSet->ReadRestoreHeaders( &restoreHelper );
 }
 
-CEG_NOINLINE void CHLClient::Restore( CSaveRestoreData *s, bool b )
+void CHLClient::Restore( CSaveRestoreData *s, bool b )
 {
 	CRestore restore(s);
 	g_pGameSaveRestoreBlockSet->Restore( &restore, b );
 	g_pGameSaveRestoreBlockSet->PostRestore();
-
-	CEG_PROTECT_VIRTUAL_FUNCTION( CHLClient_Restore );
 }
 
 static CUtlVector<EHANDLE> g_RestoredEntities;
@@ -3608,7 +3572,6 @@ void CHLClient::EmitCloseCaption( char const *captionname, float duration )
 
 	if ( m_pHudCloseCaption )
 	{
-		RANDOM_CEG_TEST_SECRET_PERIOD( 0x40, 0xff )
 		m_pHudCloseCaption->ProcessCaption( captionname, duration );
 	}
 }
@@ -3919,7 +3882,7 @@ void CHLClient::OnActiveSplitscreenPlayerChanged( int nNewSlot )
 {
 }
 
-CEG_NOINLINE void CHLClient::OnSplitScreenStateChanged()
+void CHLClient::OnSplitScreenStateChanged()
 {
 	VGui_OnSplitScreenStateChanged();
 	IterateRemoteSplitScreenViewSlots_Push( true );
@@ -3930,8 +3893,6 @@ CEG_NOINLINE void CHLClient::OnSplitScreenStateChanged()
 		GetHud().OnSplitScreenStateChanged();
 	}
 	IterateRemoteSplitScreenViewSlots_Pop();
-
-	CEG_ENCRYPT_FUNCTION( CHLClient_OnSplitScreenStateChanged );
 
 	GetFullscreenClientMode()->Layout( true );
 

@@ -427,8 +427,6 @@ target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/public/studio.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/public/vgui_controls/vgui_controls.cpp")
 target_sources(${OUTBINNAME} PRIVATE "${SRVSRCDIR}/GameStats_BasicStatsFunctions.cpp")
 
-target_sources(${OUTBINNAME} PRIVATE "${SRCDIR}/common/CegClientWrapper.cpp")
-
 #$Folder	"temporary entities"
 #{
     target_sources(${OUTBINNAME} PRIVATE "${SRVSRCDIR}/basetempentity.cpp")

@@ -11,7 +11,6 @@
 #include "vgui/ISurface.h"
 #include "vgui/KeyCode.h"
 #include "IGameUIFuncs.h"
-#include "CegClientWrapper.h"
 #include "gameconsole.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -51,7 +50,7 @@ void CGameConsoleDialog::OnCommand(const char *command)
 //-----------------------------------------------------------------------------
 // HACK: Allow F key bindings to operate even when typing in the text entry field
 //-----------------------------------------------------------------------------
-CEG_NOINLINE void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
+void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 {
 	BaseClass::OnKeyCodeTyped(code);
 	
@@ -72,8 +71,6 @@ CEG_NOINLINE void CGameConsoleDialog::OnKeyCodeTyped(KeyCode code)
 			}
 		}
 	}
-
-	CEG_PROTECT_VIRTUAL_FUNCTION( CGameConsoleDialog_OnKeyCodeTyped );
 }
 
 
