@@ -192,8 +192,7 @@ ConVar cl_show_equipment_value( "cl_show_equipment_value", "0" );
 
 ConVar cl_show_clan_in_death_notice("cl_show_clan_in_death_notice", "1", FCVAR_CLIENTDLL | FCVAR_RELEASE | FCVAR_ARCHIVE, "Is set, the clan name will show next to player names in the death notices.");
 
-//ConVar cl_violent_ragdolls( "cl_violent_ragdolls", "1", FCVAR_RELEASE, "Allows ragdolls to bleed out and react to gun shots.");
-#define USE_VIOLENT_RAGDOLLS 0
+ConVar cl_violent_ragdolls( "cl_violent_ragdolls", "1", FCVAR_RELEASE, "Allows ragdolls to bleed out and react to gun shots.");
 
 ConVar cl_dm_buyrandomweapons( "cl_dm_buyrandomweapons", "1", FCVAR_CLIENTDLL | FCVAR_RELEASE | FCVAR_ARCHIVE, "Player will automatically receive a random weapon on spawn in deathmatch if this is set to 1 (otherwise, they will receive the last weapon)" );
 
@@ -777,14 +776,14 @@ void C_CSRagdoll::ApplyRandomTaserForce( void )
 
 void C_CSRagdoll::ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCustomImpactName )
 {
-
-#if USE_VIOLENT_RAGDOLLS
-
 	static const float RAGDOLL_IMPACT_MAGNITUDE = 8000.0f;
 
 	IPhysicsObject *pPhysicsObject = VPhysicsGetObject();
 
 	if( !pPhysicsObject )
+		return;
+
+	if( !cl_violent_ragdolls.GetBool() )
 		return;
 
 	Vector dir = pTrace->endpos - pTrace->startpos;
@@ -819,9 +818,6 @@ void C_CSRagdoll::ImpactTrace( trace_t *pTrace, int iDamageType, const char *pCu
 	}
 
 	m_pRagdoll->ResetRagdollSleepAfterTime();
-
-#endif //USE_VIOLENT_RAGDOLLS
-
 }
 
 void C_CSRagdoll::ValidateModelIndex( void )
@@ -1049,9 +1045,9 @@ void C_CSRagdoll::CreateCSRagdoll()
 			const float boneDt = 0.05f;
 		
 			bool bleedOut = false;
-#if USE_VIOLENT_RAGDOLLS
-			bleedOut = ( pPlayer ? !pPlayer->m_bKilledByTaser : true );
-#endif
+
+			if( cl_violent_ragdolls.GetBool() )
+				bleedOut = ( pPlayer ? !pPlayer->m_bKilledByTaser : true );
 
 			if ( pCachedRagdoll && pCachedRagdoll->nBones == GetModelPtr()->numbones() )
 			{

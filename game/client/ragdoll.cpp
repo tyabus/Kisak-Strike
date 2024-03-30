@@ -344,21 +344,13 @@ void CRagdoll::ResetRagdollSleepAfterTime( void )
 	m_flAwakeTime = physenv->GetSimulationTime();
 }
 
-#define ALLOW_BLOOD_POOL 0
-
 void CRagdoll::CreateBloodPool( void )
 {
-
-#if ALLOW_BLOOD_POOL
-	
 	if ( m_doBleedOut )
 	{
 		DispatchParticleEffect( "blood_pool", GetRagdollOrigin(), QAngle( 0, 0, 0 ) );
 		m_doBleedOut = false;
 	}
-
-#endif
-
 }
 
 void CRagdoll::DrawWireframe()
