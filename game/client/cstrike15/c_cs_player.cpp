@@ -230,10 +230,6 @@ extern ConVar mp_playerid_hold;
 
 ConVar cl_camera_height_restriction_debug( "cl_camera_height_restriction_debug", "0", FCVAR_CHEAT | FCVAR_REPLICATED, "" );
 
-//ConVar  *sv_cheats = NULL;
-
-ConVar fov_cs_debug( "fov_cs_debug", "0", FCVAR_REPLICATED | FCVAR_CHEAT, "Sets the view fov if cheats are on." );
-
 #define FREEZECAM_LONGCAM_DIST	320  // over this amount, the camera will zoom close on target
 
 #define sv_magazine_drop_physics 1
@@ -7339,19 +7335,6 @@ bool C_CSPlayer::HasC4( void )
 float C_CSPlayer::GetFOV( void ) const
 {
 	float flCurFOV = BaseClass::GetFOV();
-
-	if ( flCurFOV == GetDefaultFOV() )
-	{
-		if ( !sv_cheats )
-		{
-			sv_cheats = cvar->FindVar( "sv_cheats" );
-		}
-
-		if ( sv_cheats->GetBool() && fov_cs_debug.GetInt() > 0 )
-		{
-			return fov_cs_debug.GetInt();
-		}
-	}
 
 #ifdef IRONSIGHT
 	CWeaponCSBase *pWeapon = GetActiveCSWeapon();
