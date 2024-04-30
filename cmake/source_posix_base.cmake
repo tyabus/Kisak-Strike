@@ -30,7 +30,7 @@ if( MSVC )
 	# Build with Multiple Processes (/MP)
 	# Buffer Security Check: No (/GS-)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /GF /MP /GS-")
-	
+
 	# @ssrobins at gitlab.kitware.com
     add_compile_options(
         $<$<CONFIG:>:/MT> #---------|
