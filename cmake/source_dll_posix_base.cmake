@@ -4,9 +4,7 @@ include("${CMAKE_MODULE_PATH}/source_posix_base.cmake")
 MacroRequired(OUTBINNAME)
 MacroRequired(OUTBINDIR)
 
-if(LINUX64 OR OSX64)
-    set(OUTBINDIR "${OUTBINDIR}${PLATSUBDIR}")
-endif()
+set(OUTBINDIR "${OUTBINDIR}${PLATSUBDIR}")
 
 #set(ConfigurationType "Dynamic Library (.dll)") #not used
 
