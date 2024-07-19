@@ -810,14 +810,11 @@ void CSteamSocketMgr::OnP2PSessionRequest( P2PSessionRequest_t *pParam )
 
 #ifndef DEDICATED
 
-	// on listen servers, don't accept connections from others if they aren't in our matchmaking session
-	if ( !g_pMatchFramework || !g_pMatchFramework->GetMatchSession() )
+	// on listen servers, don't accept connections from others if they aren't in our friends list
+	if ( Steam3Client().SteamFriends()->HasFriend( pParam->m_steamIDRemote, k_EFriendFlagImmediate ) )
 		return;
 
-	if ( GetBaseLocalClient().IsConnected() && !sv.IsActive() )
-		return;
-	
-	if ( !SessionMembersFindPlayer( g_pMatchFramework->GetMatchSession()->GetSessionSettings(), pParam->m_steamIDRemote.ConvertToUint64() ) )
+	if ( !sv.IsActive() && GetBaseLocalClient().IsConnected() )
 		return;
 
 #endif
@@ -959,12 +956,6 @@ int CSteamSocketMgr::recvfrom( int s, char * buf, int len, int flags, ns_address
 			return 0;
 		if ( sv.IsActive() )
 			return 0;
-		// Otherwise check how many players are connected to our session, if nobody is connected
-		// then do no P2P communication with nobody
-		if ( !g_pMatchFramework || !g_pMatchFramework->GetMatchSession() ||
-			( g_pMatchFramework->GetMatchSession()->GetSessionSettings()->GetInt( "members/numMachines", 0 ) < 2 ) ||
-			Q_stricmp( g_pMatchFramework->GetMatchSession()->GetSessionSettings()->GetString( "server/server" ), "listen" ) )
-			return 0;
 		break;
 	case NS_SERVER:
 		// Dedicated servers don't do P2P communication
@@ -972,11 +963,6 @@ int CSteamSocketMgr::recvfrom( int s, char * buf, int len, int flags, ns_address
 			return 0;
 		// If we are not running a listen server then there shouldn't be any P2P communication
 		if ( !sv.IsActive() )
-			return 0;
-		// Otherwise check how many players are connected to our session, if nobody is connected
-		// then do no P2P communication with nobody
-		if ( !g_pMatchFramework || !g_pMatchFramework->GetMatchSession() ||
-			( g_pMatchFramework->GetMatchSession()->GetSessionSettings()->GetInt( "members/numMachines", 0 ) < 2 ) )
 			return 0;
 		break;
 	default:
